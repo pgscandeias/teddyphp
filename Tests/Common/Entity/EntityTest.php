@@ -1,9 +1,9 @@
 <?php
 namespace Tests\Common\Entity;
 
-use Common\Entity\DoctrineEntity;
+use Common\Entity\Entity;
 
-class DoctrineEntityTest extends \PHPUnit_Framework_TestCase
+class EntityTest extends \PHPUnit_Framework_TestCase
 {
     protected $sample;
     
@@ -26,7 +26,7 @@ class DoctrineEntityTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class Sample extends DoctrineEntity
+class Sample extends Entity
 {
     protected $foo;
     protected $bar;

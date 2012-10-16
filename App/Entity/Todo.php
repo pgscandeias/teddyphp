@@ -1,27 +1,10 @@
 <?php
 namespace App\Entity;
-use Common\Entity\DoctrineEntity;
+use Common\Entity\Entity;
 
-/**
- * @Entity(repositoryClass="Backend\Repository\TodoRepository")
- * @Table(name="todos")
- */
-class Todo extends DoctrineEntity
+class Todo extends Entity
 {
-    /**
-     * @Id
-     * @Column(name="id", type="integer")
-     * @GeneratedValue(strategy="AUTO")
-     */
     protected $id;
-    
-    /**
-     * @Column(name="title", type="string")
-     */
     protected $title;
-    
-	/**
-	 * @Column(name="isDone", type="boolean")
-	 */
 	protected $isDone = false;
 }

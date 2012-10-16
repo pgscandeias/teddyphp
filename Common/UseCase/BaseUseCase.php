@@ -11,55 +11,10 @@ class BaseUseCase
 {
     protected $validator;
     protected $validationErrors = array();
-    protected $em;  // Doctrine Entity Manager
     
-    public function __construct($entityManager)
+    public function __construct()
     {
         $this->validator = new Validator;
-        $this->em = $entityManager;
-    }
-    
-    protected function getRepo($entityName)
-    {
-        return $this->em->getRepository('\App\Entity\\'.$entityName);
-    }
-    
-    protected function persistEntity($entity)
-    {
-        if (!$this->validate($entity)) {
-            return false;
-        }
-        
-        $this->em->persist($entity);
-        $this->em->flush();
-        
-        return true;
-    }
-    
-    protected function responsify($entity)
-    {
-        $data = array();
-        foreach ($entity->getFields() as $property) {
-            $value = $entity->{$property};
-            if ($value instanceof EntityInterface) {
-                $data[$property] = $value->id;
-            }
-            elseif ($value instanceof \Doctrine\Common\Collections\Collection) {
-                $ids = array();
-                foreach ($value as $item) {
-                    $ids[] = $item->id;
-                }
-                $data[$property] = $ids;
-            }
-            elseif ($value instanceof \DateTime) {
-                $data[$property] = $value->format($this->getDateTimePropertyFormat($entity, $property));
-            }
-            else {
-                $data[$property] = $value;
-            }
-        }
-        
-        return $data;
     }
     
     protected function success(array $data)
@@ -104,22 +59,5 @@ class BaseUseCase
         $response->errors[] = $message;
         
         return $response;
-    }
-    
-    protected function getDateTimePropertyFormat(EntityInterface $entity, $property)
-    {
-        if (!$entity->{$property} instanceof \DateTime) {
-            return false;
-        }
-        
-        $cmf = $this->em->getMetadataFactory();
-        $class = $cmf->getMetadataFor(get_class($entity));
-        
-        if ($class->fieldMappings[$property]['type'] == 'date') {
-            return 'Y-m-d';
-        }
-        elseif ($class->fieldMappings[$property]['type'] == 'datetime') {
-            return 'Y-m-d H:i:s';
-        }
     }
 }

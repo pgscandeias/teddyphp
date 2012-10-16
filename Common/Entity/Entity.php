@@ -3,7 +3,7 @@ namespace Common\Entity;
 
 use Common\Component\Inflect;
 
-abstract class DoctrineEntity implements EntityInterface
+abstract class Entity implements EntityInterface
 {
     public function __construct($data = array())
     {

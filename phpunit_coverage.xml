@@ -27,14 +27,13 @@
     <filter>
         <whitelist>
             <directory>App</directory>
-            <directory>Backend</directory>
             <directory>Common</directory>
             <directory>Tests</directory>
         </whitelist>
         
         <blacklist>
             <directory>vendor</directory>
-            <file>App/utils/autoload.php</file>
+            <file>Common/autoload.php</file>
         </blacklist>
     </filter>
     

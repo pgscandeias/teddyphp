@@ -39,24 +39,4 @@ abstract class Entity implements EntityInterface
         
         return $out;
     }
-    
-    public function __call($method, $args)
-    {
-        if (substr($method, 0, 3) == 'add') {
-            $collectionName = Inflect::pluralize(lcfirst(substr($method, 3)));
-            if(property_exists(get_called_class(), $collectionName)) {
-                $this->{$collectionName}[] = $args[0];
-            }
-        }
-    }
-    
-    public function getFields()
-    {
-        $fields = array();
-        foreach ($this as $field => $value) {
-            $fields[] = $field;
-        }
-        
-        return $fields;
-    }
 }
